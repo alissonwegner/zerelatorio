@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Meu Site Escuro</title>
+</head>
+<body>
+    <header>
+        <h1>Seu Título Aqui</h1>
+        <p>Descrição do seu site.</p>
+    </header>
+
+    <section id="content">
+        <h2>Seção Principal</h2>
+
+        <!-- Adicionando uma div ao redor do texto e da opção de arquivo -->
+        <div class="content-wrapper">
+            <p>Conteúdo interessante vai aqui.</p>
+            <label for="pdfFile">Inserir arquivo PDF:</label>
+            <input type="file" id="pdfFile" name="pdfFile" accept=".pdf">
+            <button onclick="enviarArquivo()">Enviar</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>Rodapé do Site &copy; 2023</p>
+    </footer>
+
+    <script>
+        async function enviarArquivo() {
+            var input = document.getElementById('pdfFile');
+            var file = input.files[0];
+    
+            var formData = new FormData();
+            formData.append('pdfFile', file);
+    
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                const data = await response.json();
+    
+                if (data.error) {
+                    alert('Erro: ' + data.error);
+                } else {
+                    alert('Sucesso: ' + data.success);
+                    // Redirecionar para a página de resultado
+                    window.location.href = '/resultado/' + encodeURIComponent(data.resultado_relatorio.caminho_arquivo_excel);
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+            }
+        }
+    </script>
+</body>
+</html>
