@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Resultado da Análise</title>
+</head>
+<body>
+    <header>
+        <h1>Resultado da Análise</h1>
+    </header>
+
+    <section id="content">
+        <h2>Detalhes da Análise</h2>
+
+        <!-- Exemplo de exibição de informações do Python no HTML -->
+        <p>Número de Linhas: {{ numero_linhas }}</p>
+        <p>Valor Total: R${{ numero_linhas * 7 }}</p>
+
+        <h2>Contagem de Ocorrências</h2>
+
+        <h3>Por Semana</h3>
+        <ul>
+            {% for semana in contagem_todas_semanas %}
+                <li>Semana {{ semana['Número da Semana'] }}: {{ semana['Ocorrências'] }} ocorrências</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Por Ano</h3>
+        <ul>
+            {% for ano in contagem_todos_anos %}
+                <li>Ano {{ ano['Ano'] }}: {{ ano['Ocorrências'] }} ocorrências</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Por Ano e Mês</h3>
+        <ul>
+            {% for mes in contagem_todos_meses %}
+                <li>Ano {{ mes['Ano'] }}, Mês {{ mes['Mês'] }}: {{ mes['Ocorrências'] }} ocorrências</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Por Ano, Mês e Dia</h3>
+        <ul>
+            {% for dia in contagem_todos_dias %}
+                <li>Ano {{ dia['Ano'] }}, Mês {{ dia['Mês'] }}, Dia {{ dia['Dia'] }}: {{ dia['Ocorrências'] }} ocorrências</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <footer>
+        <p>Rodapé do Resultado &copy; 2023</p>
+    </footer>
+</body>
+</html>
