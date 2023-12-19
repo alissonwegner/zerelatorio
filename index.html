@@ -8,8 +8,8 @@
 </head>
 <body>
     <header>
-        <h1>Seu Título Aqui</h1>
-        <p>Descrição do seu site.</p>
+        <h1>Analise do relatorio de entregas</h1>
+        <p></p>
     </header>
 
     <section id="content">
@@ -17,7 +17,7 @@
 
         <!-- Adicionando uma div ao redor do texto e da opção de arquivo -->
         <div class="content-wrapper">
-            <p>Conteúdo interessante vai aqui.</p>
+            <p>Insira o PDF com o relatorio do aplicativo do Ze.</p>
             <label for="pdfFile">Inserir arquivo PDF:</label>
             <input type="file" id="pdfFile" name="pdfFile" accept=".pdf">
             <button onclick="enviarArquivo()">Enviar</button>
@@ -25,10 +25,12 @@
     </section>
 
     <footer>
-        <p>Rodapé do Site &copy; 2023</p>
+        <p>Software de testes &copy; 2023</p>
     </footer>
 
     <script>
+        var base_url = '';
+    
         async function enviarArquivo() {
             var input = document.getElementById('pdfFile');
             var file = input.files[0];
@@ -37,7 +39,7 @@
             formData.append('pdfFile', file);
     
             try {
-                const response = await fetch('/', {
+                const response = await fetch(base_url + '/', {
                     method: 'POST',
                     body: formData
                 });
@@ -48,13 +50,14 @@
                     alert('Erro: ' + data.error);
                 } else {
                     alert('Sucesso: ' + data.success);
-                    // Redirecionar para a página de resultado
-                    window.location.href = '/resultado/' + encodeURIComponent(data.resultado_relatorio.caminho_arquivo_excel);
+                    window.location.href = base_url + '/resultado/' + encodeURIComponent(data.resultado_relatorio.caminho_arquivo_excel);
                 }
             } catch (error) {
                 console.error('Erro na requisição:', error);
             }
         }
     </script>
+    
+    
 </body>
 </html>

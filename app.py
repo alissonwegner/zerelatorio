@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
-from subprocess import Popen, PIPE
+import tabula
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -34,14 +35,28 @@ def index():
 
 def processar_pdf(file_path):
     try:
-        comando = ['python3', 'init.py', file_path]
-        processo = Popen(comando, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = processo.communicate()
+        tabelas = tabula.read_pdf(file_path, pages='all', multiple_tables=True)
 
-        if processo.returncode == 0:
-            return {'success': stdout.decode()}
-        else:
-            return {'error': stderr.decode()}
+        valores_quarta_coluna = []
+
+        for i, tabela_atual in enumerate(tabelas, start=1):
+            quarta_coluna = tabela_atual.iloc[:, 3].tolist()
+            valores_quarta_coluna.extend(quarta_coluna)
+
+        if valores_quarta_coluna:
+            df_resultado = pd.DataFrame({"Quarta Coluna": valores_quarta_coluna})
+            nome_arquivo_excel = "planilha_quarta_coluna.xlsx"
+            caminho_arquivo_excel = os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo_excel)
+            df_resultado.to_excel(caminho_arquivo_excel, index=False)
+
+            numero_de_linhas = len(valores_quarta_coluna)
+            print(f"\nValores da quarta coluna de todas as tabelas foram salvos em {caminho_arquivo_excel}")
+            print(f"Ja fez:{numero_de_linhas} teles.")
+            print(f"Ja fez: R${numero_de_linhas*7} Reais.")
+
+            return {'success': True, 'numero_linhas': numero_de_linhas, 'caminho_arquivo_excel': caminho_arquivo_excel}
+
+        return {'error': 'Não foram encontradas tabelas no PDF.'}
 
     except Exception as e:
         return {'error': str(e)}
