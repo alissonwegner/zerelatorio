@@ -1,30 +1,38 @@
 body {
+    background-color: #ffcc00; /* Cor de fundo alterada para #ffcc00 */
+    color: #ffffff;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: #1d1e20; /* Cor do cabeçalho alterada para #1d1e20 */
+    color: #ffffff;
+    padding: 20px;
     text-align: center;
-    padding: 1em 0;
 }
 
-#content {
+header h1 {
+    margin: 0;
+}
+
+section {
     padding: 20px;
 }
 
-.content-wrapper {
-    margin-top: 20px;
-}
-
 footer {
-    background-color: #333;
-    color: white;
+    background-color: #333333;
+    color: #999999;
     text-align: center;
-    padding: 1em 0;
+    padding: 10px;
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+.content-wrapper {
+    background-color: #333333; /* Cor de fundo para a div */
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px; /* Adicionando bordas arredondadas para a div */
 }
